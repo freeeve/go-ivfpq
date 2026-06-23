@@ -59,20 +59,24 @@ func KMeans(points []float32, n, dim, k, iters int, rng *Rng) (centroids []float
 }
 
 // nearest returns the index of the centroid closest to p by squared L2 distance.
-// Ties resolve to the lower index (strict <), matching the Rust trainer.
+// Ties resolve to the lower index (strict <), matching the Rust trainer. This is the
+// trainer's hot path (~95% of build time), so the slices are pre-sized to dim to let the
+// compiler drop bounds checks from the inner accumulation.
 func nearest(p, centroids []float32, dim int) int {
 	best := 0
 	bestD := float32(math.Inf(1))
-	for j := range len(centroids) / dim {
-		c := centroids[j*dim : (j+1)*dim]
+	p = p[:dim]
+	for j := 0; j+dim <= len(centroids); j += dim {
+		c := centroids[j : j+dim]
+		c = c[:len(p)] // BCE: len(c) == len(p), so the inner indexing drops bounds checks
 		var d float32
-		for i := range dim {
+		for i := range p {
 			diff := p[i] - c[i]
 			d += diff * diff
 		}
 		if d < bestD {
 			bestD = d
-			best = j
+			best = j / dim
 		}
 	}
 	return best
