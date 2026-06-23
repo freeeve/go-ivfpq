@@ -1,0 +1,9 @@
+rng_seed 5251564952525649
+rng_seq afd5c6f8e638868d e4d84df18747986c 1821535469c48040 45aaf7f832bbb20c 4128c75d9db2ed2c 0299ed1f9be6d09d ea45bfe058139e46 5ee4edc6592e5603 1f88afc7cfba462e b3ccd85729c4c9ca 6322a03ab3c77736 59870edab3de1734 a832d908f18d8ef8 c0ea5354111bcf47 bdfabfe934a8cd19 b33bcd43fa18b95f
+dim 4
+k 3
+iters 25
+n 24
+points 411ccccd be4ccccd be4ccccd be4ccccd 411e6666 bdcccccd bdcccccd bdcccccd 41200000 00000000 00000000 00000000 4121999a 3dcccccd 3dcccccd 3dcccccd 41233333 3e4ccccd 3e4ccccd 3e4ccccd 411ccccd be4ccccd be4ccccd be4ccccd 411e6666 bdcccccd bdcccccd bdcccccd 41200000 00000000 00000000 00000000 3dcccccd 4121999a 3dcccccd 3dcccccd 3e4ccccd 41233333 3e4ccccd 3e4ccccd be4ccccd 411ccccd be4ccccd be4ccccd bdcccccd 411e6666 bdcccccd bdcccccd 00000000 41200000 00000000 00000000 3dcccccd 4121999a 3dcccccd 3dcccccd 3e4ccccd 41233333 3e4ccccd 3e4ccccd be4ccccd 411ccccd be4ccccd be4ccccd bdcccccd bdcccccd 411e6666 bdcccccd 00000000 00000000 41200000 00000000 3dcccccd 3dcccccd 4121999a 3dcccccd 3e4ccccd 3e4ccccd 41233333 3e4ccccd be4ccccd be4ccccd 411ccccd be4ccccd bdcccccd bdcccccd 411e6666 bdcccccd 00000000 00000000 41200000 00000000 3dcccccd 3dcccccd 4121999a 3dcccccd
+centroids 00000000 00000000 41200000 00000000 3c4cccce 41203333 3c4cccce 3c4cccce 411f6667 bd19999a bd19999a bd19999a
+assign 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0
