@@ -143,7 +143,7 @@ func Train(vectors []Vector, p Params) (*Model, error) {
 	for _, v := range vectors {
 		ids = append(ids, v.ID)
 		if p.Metric == InnerProduct {
-			pts = append(pts, normalize(v.Vec)...)
+			pts = appendNormalized(pts, v.Vec)
 		} else {
 			pts = append(pts, v.Vec...)
 		}
@@ -182,9 +182,24 @@ func Train(vectors []Vector, p Params) (*Model, error) {
 		}
 	}
 
-	// Scatter every vector into its cluster's list.
+	// Scatter every vector into its cluster's list. The lists are views into two
+	// contiguous backing arrays (CSR-style): count per cluster, hand each list an
+	// exact-capacity subslice, then fill — no per-list growth reallocation.
+	clusterCount := make([]int, nlist)
+	for i := range n {
+		clusterCount[int(assign[i])]++
+	}
+	idBack := make([]uint32, n)
+	codeBack := make([]byte, n*m)
 	listIDs := make([][]uint32, nlist)
 	listCodes := make([][]byte, nlist)
+	idPos, codePos := 0, 0
+	for c := range nlist {
+		listIDs[c] = idBack[idPos : idPos : idPos+clusterCount[c]]
+		listCodes[c] = codeBack[codePos : codePos : codePos+clusterCount[c]*m]
+		idPos += clusterCount[c]
+		codePos += clusterCount[c] * m
+	}
 	for i := range n {
 		a := int(assign[i])
 		listIDs[a] = append(listIDs[a], ids[i])

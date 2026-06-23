@@ -83,18 +83,23 @@ func nearest(p, centroids []float32, dim int) int {
 // computed in float64 then rounded to float32 — for sqrt this yields the
 // correctly-rounded single-precision result, matching Rust's f32::sqrt.
 func normalize(v []float32) []float32 {
+	return appendNormalized(make([]float32, 0, len(v)), v)
+}
+
+// appendNormalized appends v scaled to unit L2 norm to dst (a zero vector is appended
+// unchanged), allocating no temporary — the inner-product build hot path. Produces the
+// same values as normalize.
+func appendNormalized(dst, v []float32) []float32 {
 	var sum float32
 	for _, x := range v {
 		sum += x * x
 	}
 	norm := float32(math.Sqrt(float64(sum)))
-	out := make([]float32, len(v))
 	if norm == 0 {
-		copy(out, v)
-		return out
+		return append(dst, v...)
 	}
-	for i, x := range v {
-		out[i] = x / norm
+	for _, x := range v {
+		dst = append(dst, x/norm)
 	}
-	return out
+	return dst
 }
